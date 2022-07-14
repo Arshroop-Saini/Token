@@ -4,17 +4,18 @@ import Debug "mo:base/Debug";
 import Iter "mo:base/Iter";
 
 actor Token {
-
+  // Creating my own Token and then assigning them to the principal id of myself.
   let owner : Principal = Principal.fromText("<REPLACE WITH YOUR PRINCIPAL>");
   let totalSupply : Nat = 1000000000;
-  let symbol : Text = "DANG";
+  let symbol : Text = "SPARK";
 
+  // Creating a ledger that would act as a decentralized database and store the amt of tokens each has.
   private stable var balanceEntries : [(Principal, Nat)] = [];
   private var balances = HashMap.HashMap<Principal, Nat>(1, Principal.equal, Principal.hash);
   if (balances.size() < 1) {
     balances.put(owner, totalSupply);
   };
-    
+  
   public query func balanceOf(who: Principal) : async Nat {
 
     let balance : Nat = switch (balances.get(who)) {
